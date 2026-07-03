@@ -188,24 +188,6 @@ To add a new language, create a JSON file in the `locales/` folder (same structu
 | Service | 5 |
 | Emergency | 32 |
 
-## Releases
-
-Releases are created manually via GitHub Actions.
-
-1. Bump the version in `fxmanifest.lua`
-2. Update `CHANGELOG.md` with the new version section
-3. Commit and push to `main`
-4. Go to **Actions → Release → Run workflow**
-
-The workflow will:
-
-1. Create a **draft** release using the `fxmanifest.lua` version (`v1.0.0`, etc.)
-2. Build a `gabz-vehicle-spawner-vX.X.X.zip` asset in standard FiveM format
-3. Upload the ZIP to the draft release
-4. Validate the draft and **publish** the release
-
-The release description is taken from `CHANGELOG.md`.
-
 ## Acknowledgments
 
 - **[GabZ Vehicle Data](https://github.com/JustBlueDolphin/Gabz-Vehicle-Data)** by [JustBlueDolphin](https://github.com/JustBlueDolphin) - vehicle spawn codes, names, brands, and categories used in `config.lua`
