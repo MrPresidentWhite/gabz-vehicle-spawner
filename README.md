@@ -4,6 +4,8 @@ A FiveM vehicle spawner for the **GabZ vehicle pack**, featuring a modern NUI me
 
 Vehicle data is based on the [GabZ Vehicle Data Repository](https://github.com/JustBlueDolphin/Gabz-Vehicle-Data).
 
+> **Required:** This resource does not include vehicle models. You need a licensed [GabZ Vehicle Pack](https://fivem.gabzv.com/package/6108207) from [GabZ](https://fivem.gabzv.com).
+
 ## Features
 
 - **124 GabZ vehicles** across 13 categories
@@ -13,14 +15,15 @@ Vehicle data is based on the [GabZ Vehicle Data Repository](https://github.com/J
 - Server-side spawn code validation
 - Optional ace permissions for admins
 - Automatically deletes the previous spawned vehicle
-- Standalone — no external dependencies
+- Standalone spawner script — requires the GabZ vehicle pack separately
 
 ## FiveM Server Installation
 
 ### Requirements
 
 - A running FiveM server (txAdmin or standalone)
-- The **GabZ vehicle pack** installed on the server — this resource only provides the spawner menu, not the vehicle models themselves
+- A licensed **[GabZ Vehicle Pack](https://fivem.gabzv.com/package/6108207)** purchased from [GabZ](https://fivem.gabzv.com)
+- The GabZ vehicle pack installed and started on your server — this resource only provides the spawner menu, not the vehicle models themselves
 
 ### Option A: Download from GitHub (recommended)
 
@@ -72,19 +75,25 @@ server/
         └── html/
 ```
 
-### GabZ vehicle pack
+### GabZ vehicle pack (required)
 
-This spawner requires the GabZ vehicles to be installed separately. Make sure:
+This spawner requires the official GabZ vehicle pack. It is **not** included in this repository.
 
-1. The GabZ vehicle pack resource is installed in `resources/`
-2. It is started **before** this spawner in `server.cfg`:
+| Resource | Link |
+|----------|------|
+| GabZ | https://fivem.gabzv.com |
+| GabZ Vehicle Pack (required) | https://fivem.gabzv.com/package/6108207 |
+
+1. Purchase and download the [GabZ Vehicle Pack](https://fivem.gabzv.com/package/6108207) from [GabZ](https://fivem.gabzv.com)
+2. Install the GabZ vehicle pack resource in your server's `resources/` folder
+3. Start the GabZ pack **before** this spawner in `server.cfg`:
 
 ```cfg
-ensure gabz-vehicles        # your GabZ pack resource name
+ensure gabz-vehicles        # use the actual resource name from your GabZ pack
 ensure gabz-vehicle-spawner
 ```
 
-3. Vehicle spawn codes in `config.lua` match the models provided by your GabZ pack
+4. Vehicle spawn codes in `config.lua` must match the models provided by your GabZ pack
 
 ### Verify installation
 
@@ -203,7 +212,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 You are free to use, modify, and distribute this spawner resource under the terms of that license.
 
-**Important:** This license applies only to the spawner script and its UI. It does **not** grant any rights to GabZ vehicle models or assets. You must own or license the GabZ vehicle pack separately to use the spawned vehicles on your server.
+**Important:** This license applies only to the spawner script and its UI. It does **not** grant any rights to GabZ vehicle models or assets. You must purchase and license the [GabZ Vehicle Pack](https://fivem.gabzv.com/package/6108207) separately from [GabZ](https://fivem.gabzv.com) to use the spawned vehicles on your server.
 
 ## Project structure
 

@@ -27,9 +27,15 @@ Third-party notice
 This resource is a vehicle spawner menu for FiveM. It does not include or
 distribute GabZ vehicle models, textures, or other assets.
 
-GabZ vehicles are a separate product and must be obtained and licensed
-independently from GabZ (or an authorized reseller). Vehicle spawn codes and
-metadata used in this project reference publicly available community data and
-require a valid GabZ vehicle pack installation on your server.
+A valid GabZ vehicle pack license is required to use this spawner with the
+referenced vehicles. The GabZ vehicle pack is a separate commercial product
+and must be purchased independently:
+
+- GabZ: https://fivem.gabzv.com
+- GabZ Vehicle Pack (required): https://fivem.gabzv.com/package/6108207
+
+Vehicle spawn codes and metadata used in this project reference publicly
+available community data. They only work when the official GabZ vehicle pack
+is installed and properly licensed on your server.
 
 This project is not affiliated with, endorsed by, or sponsored by GabZ.
