@@ -105,6 +105,14 @@ Then restart the resource:
 restart gabz-vehicle-spawner
 ```
 
+### Install from GitHub Release (ZIP)
+
+1. Go to [Releases](https://github.com/MrPresidentWhite/gabz-vehicle-spawner/releases)
+2. Download `gabz-vehicle-spawner-vX.X.X.zip`
+3. Extract into your `resources/` folder — the ZIP already contains the correct `gabz-vehicle-spawner/` folder structure
+4. Add `ensure gabz-vehicle-spawner` to your `server.cfg`
+5. Restart the server
+
 ## Usage
 
 | Action | Control |
@@ -171,12 +179,33 @@ To add a new language, create a JSON file in the `locales/` folder (same structu
 | Service | 5 |
 | Emergency | 32 |
 
+## Releases
+
+Releases are created manually via GitHub Actions.
+
+1. Bump the version in `fxmanifest.lua`
+2. Update `CHANGELOG.md` with the new version section
+3. Commit and push to `main`
+4. Go to **Actions → Release → Run workflow**
+
+The workflow will:
+
+1. Create a **draft** release using the `fxmanifest.lua` version (`v1.0.0`, etc.)
+2. Build a `gabz-vehicle-spawner-vX.X.X.zip` asset in standard FiveM format
+3. Upload the ZIP to the draft release
+4. Validate the draft and **publish** the release
+
+The release description is taken from `CHANGELOG.md`.
+
 ## Project structure
 
 ```
 gabz-vehicle-spawner/
+├── .github/workflows/release.yml
 ├── fxmanifest.lua
 ├── config.lua
+├── CHANGELOG.md
+├── scripts/build-release.sh
 ├── shared/locale.lua
 ├── locales/
 │   ├── de.json

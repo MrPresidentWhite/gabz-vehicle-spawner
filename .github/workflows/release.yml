@@ -1,0 +1,221 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  RESOURCE_NAME: gabz-vehicle-spawner
+
+jobs:
+  create-draft:
+    name: Create release draft
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.meta.outputs.version }}
+      tag: ${{ steps.meta.outputs.tag }}
+      release_title: ${{ steps.meta.outputs.release_title }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract version from fxmanifest
+        id: meta
+        run: |
+          VERSION=$(awk -F"'" '/^version / { print $2; exit }' fxmanifest.lua)
+
+          if [[ -z "${VERSION}" ]]; then
+            echo "Failed to extract version from fxmanifest.lua"
+            exit 1
+          fi
+
+          if [[ ! "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Version '${VERSION}' is not a valid semver (expected x.y.z)"
+            exit 1
+          fi
+
+          TAG="v${VERSION}"
+
+          echo "version=${VERSION}" >> "${GITHUB_OUTPUT}"
+          echo "tag=${TAG}" >> "${GITHUB_OUTPUT}"
+          echo "release_title=${RESOURCE_NAME} ${TAG}" >> "${GITHUB_OUTPUT}"
+
+          echo "Release version: ${VERSION}"
+          echo "Release tag: ${TAG}"
+
+      - name: Validate changelog
+        run: |
+          if [[ ! -s CHANGELOG.md ]]; then
+            echo "CHANGELOG.md is missing or empty."
+            exit 1
+          fi
+
+      - name: Check for existing published release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.meta.outputs.tag }}
+        run: |
+          if gh release view "${TAG}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            RELEASE_JSON=$(gh release view "${TAG}" --repo "${GITHUB_REPOSITORY}" --json isDraft)
+            IS_DRAFT=$(echo "${RELEASE_JSON}" | jq -r '.isDraft')
+
+            if [[ "${IS_DRAFT}" != "true" ]]; then
+              echo "Published release ${TAG} already exists."
+              exit 1
+            fi
+
+            echo "Draft release ${TAG} already exists. It will be reused."
+            echo "reuse_draft=true" >> "${GITHUB_ENV}"
+          else
+            echo "reuse_draft=false" >> "${GITHUB_ENV}"
+          fi
+
+      - name: Create release draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.meta.outputs.tag }}
+          RELEASE_TITLE: ${{ steps.meta.outputs.release_title }}
+        run: |
+          if [[ "${reuse_draft}" == "true" ]]; then
+            gh release edit "${TAG}" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --draft=true \
+              --title "${RELEASE_TITLE}" \
+              --notes-file CHANGELOG.md
+            echo "Updated existing draft release ${TAG}"
+          else
+            gh release create "${TAG}" \
+              --repo "${GITHUB_REPOSITORY}" \
+              --draft \
+              --title "${RELEASE_TITLE}" \
+              --target "${GITHUB_SHA}" \
+              --notes-file CHANGELOG.md
+            echo "Created draft release ${TAG}"
+          fi
+
+  build-assets:
+    name: Build release assets
+    needs: create-draft
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build resource archive
+        run: |
+          chmod +x scripts/build-release.sh
+          ./scripts/build-release.sh
+
+          VERSION="${{ needs.create-draft.outputs.version }}"
+          ARCHIVE_NAME="${RESOURCE_NAME}-v${VERSION}.zip"
+
+          cd dist
+          zip -r "${ARCHIVE_NAME}" "${RESOURCE_NAME}"
+
+          if ! unzip -l "${ARCHIVE_NAME}" | grep -q "${RESOURCE_NAME}/fxmanifest.lua"; then
+            echo "Build validation failed: archive does not contain ${RESOURCE_NAME}/fxmanifest.lua"
+            exit 1
+          fi
+
+          echo "Built archive: dist/${ARCHIVE_NAME}"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-asset
+          path: dist/${{ env.RESOURCE_NAME }}-v${{ needs.create-draft.outputs.version }}.zip
+          if-no-files-found: error
+
+  upload-assets:
+    name: Upload assets to draft
+    needs: [create-draft, build-assets]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: release-asset
+          path: dist
+
+      - name: Upload asset to draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.create-draft.outputs.tag }}
+          VERSION: ${{ needs.create-draft.outputs.version }}
+        run: |
+          ARCHIVE_NAME="${RESOURCE_NAME}-v${VERSION}.zip"
+          ARCHIVE_PATH="dist/${ARCHIVE_NAME}"
+
+          if [[ ! -f "${ARCHIVE_PATH}" ]]; then
+            echo "Archive not found at ${ARCHIVE_PATH}"
+            ls -la dist || true
+            exit 1
+          fi
+
+          gh release upload "${TAG}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --clobber \
+            "${ARCHIVE_PATH}"
+
+          echo "Uploaded ${ARCHIVE_NAME} to draft release ${TAG}"
+
+  publish-release:
+    name: Validate and publish release
+    needs: [create-draft, upload-assets]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.create-draft.outputs.tag }}
+          VERSION: ${{ needs.create-draft.outputs.version }}
+        run: |
+          RELEASE_JSON=$(gh release view "${TAG}" --repo "${GITHUB_REPOSITORY}" --json isDraft,body,assets)
+          IS_DRAFT=$(echo "${RELEASE_JSON}" | jq -r '.isDraft')
+          BODY=$(echo "${RELEASE_JSON}" | jq -r '.body')
+          ASSET_COUNT=$(echo "${RELEASE_JSON}" | jq -r '.assets | length')
+          ASSET_NAME=$(echo "${RELEASE_JSON}" | jq -r '.assets[0].name // empty')
+
+          EXPECTED_ASSET="${RESOURCE_NAME}-v${VERSION}.zip"
+
+          if [[ "${IS_DRAFT}" != "true" ]]; then
+            echo "Release ${TAG} is not a draft."
+            exit 1
+          fi
+
+          if [[ -z "${BODY}" ]]; then
+            echo "Release description is empty."
+            exit 1
+          fi
+
+          if [[ "${ASSET_COUNT}" -lt 1 ]]; then
+            echo "No release assets found on draft ${TAG}."
+            exit 1
+          fi
+
+          if [[ "${ASSET_NAME}" != "${EXPECTED_ASSET}" ]]; then
+            echo "Unexpected asset name: ${ASSET_NAME} (expected ${EXPECTED_ASSET})"
+            exit 1
+          fi
+
+          if ! grep -q "## \[${VERSION}\]" CHANGELOG.md; then
+            echo "Warning: CHANGELOG.md does not contain a section for version ${VERSION}"
+          fi
+
+          echo "Draft release ${TAG} validated successfully."
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.create-draft.outputs.tag }}
+        run: |
+          gh release edit "${TAG}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --draft=false
+
+          echo "Published release ${TAG}"
