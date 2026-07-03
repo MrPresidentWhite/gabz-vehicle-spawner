@@ -1,50 +1,72 @@
-MIT License
-
+GabZ Vehicle Spawner Non-Commercial License
 Copyright (c) 2026 MrPresidentWhite
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to use, copy,
+modify, and distribute the Software for non-commercial purposes only, subject
+to the conditions below.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. Permitted uses
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+   You may:
 
----
+   - Use the Software on your own FiveM server(s)
+   - Modify the Software for your own non-commercial server use
+   - Share unmodified or modified copies of the Software free of charge
+   - Include the Software in free, non-commercial server resource collections
 
-Third-party notice
+   Any distribution must include this license and the copyright notice.
 
-This resource is a vehicle spawner menu for FiveM. It does not include or
-distribute GabZ vehicle models, textures, or other assets.
+2. Commercial use and distribution are prohibited
 
-A valid GabZ vehicle pack license is required to use this spawner with the
-referenced vehicles. The GabZ vehicle pack is a separate commercial product
-and must be purchased independently:
+   You may not, without prior written permission from the copyright holder:
 
-- GabZ: https://fivem.gabzv.com
-- GabZ Vehicle Pack (required): https://fivem.gabzv.com/package/6108207
+   - Sell, rent, lease, or otherwise commercially distribute the Software
+   - Offer the Software as part of a paid product, subscription, or service
+   - Include the Software in paid server packages, Tebex stores, escrow services,
+     or similar commercial offerings
+   - Charge money for access to the Software or a build containing it
+   - Sublicense the Software for commercial purposes
+   - Use the Software to compete with or replace a commercial product offered
+     by GabZ or other rights holders
 
-Vehicle spawn codes and metadata used in this project are sourced from the
-GabZ Vehicle Data community repository:
+   This restriction exists to avoid conflicts with third-party commercial
+   licenses, especially the official GabZ vehicle pack.
 
-- https://github.com/JustBlueDolphin/Gabz-Vehicle-Data
+3. No vehicle assets included
 
-Thank you to JustBlueDolphin for providing and maintaining this data. That
-repository is a separate community project and is not affiliated with GabZ
-or this spawner resource.
+   The Software is a spawner menu only. It does not include or distribute
+   GabZ vehicle models, textures, or other assets.
 
-The spawn codes and metadata only work when the official GabZ vehicle pack
-is installed and properly licensed on your server.
+   A valid GabZ vehicle pack license is required to spawn the referenced
+   vehicles in-game. The GabZ vehicle pack is a separate commercial product
+   and must be purchased independently:
 
-This project is not affiliated with, endorsed by, or sponsored by GabZ or
-JustBlueDolphin.
+   - GabZ: https://fivem.gabzv.com
+   - GabZ Vehicle Pack (required): https://fivem.gabzv.com/package/6108207
+
+4. Third-party data
+
+   Vehicle spawn codes and metadata used in this project are sourced from the
+   GabZ Vehicle Data community repository:
+
+   - https://github.com/JustBlueDolphin/Gabz-Vehicle-Data
+
+   Thank you to JustBlueDolphin for providing and maintaining this data. That
+   repository is a separate community project and is not affiliated with GabZ
+   or this spawner resource.
+
+5. No affiliation
+
+   This project is not affiliated with, endorsed by, or sponsored by GabZ or
+   JustBlueDolphin.
+
+6. Disclaimer
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.

@@ -197,9 +197,9 @@ Thank you to JustBlueDolphin for making the vehicle metadata publicly available 
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under a custom **[Non-Commercial License](LICENSE)**.
 
-You are free to use, modify, and distribute this spawner resource under the terms of that license.
+You may use, modify, and share this spawner **free of charge** for non-commercial FiveM server use. **Commercial distribution is not allowed**, including selling the resource or bundling it in paid server packages (for example Tebex stores). This helps avoid conflicts with the commercial [GabZ Vehicle Pack](https://fivem.gabzv.com/package/6108207).
 
 **Important:** This license applies only to the spawner script and its UI. It does **not** grant any rights to GabZ vehicle models or assets. You must purchase and license the [GabZ Vehicle Pack](https://fivem.gabzv.com/package/6108207) separately from [GabZ](https://fivem.gabzv.com) to use the spawned vehicles on your server.
 
