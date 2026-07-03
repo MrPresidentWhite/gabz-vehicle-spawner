@@ -197,11 +197,20 @@ The workflow will:
 
 The release description is taken from `CHANGELOG.md`.
 
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+You are free to use, modify, and distribute this spawner resource under the terms of that license.
+
+**Important:** This license applies only to the spawner script and its UI. It does **not** grant any rights to GabZ vehicle models or assets. You must own or license the GabZ vehicle pack separately to use the spawned vehicles on your server.
+
 ## Project structure
 
 ```
 gabz-vehicle-spawner/
 ├── .github/workflows/release.yml
+├── LICENSE
 ├── fxmanifest.lua
 ├── config.lua
 ├── CHANGELOG.md
