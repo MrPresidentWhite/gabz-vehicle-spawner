@@ -46,8 +46,9 @@ Config.CategoryOrder = {
     'Emergency',
 }
 
--- Vehicle data from GabZ Vehicle Data
+-- Vehicle spawn codes and metadata from GabZ Vehicle Data
 -- Source: https://github.com/JustBlueDolphin/Gabz-Vehicle-Data
+-- Thank you to JustBlueDolphin for providing this data
 Config.Vehicles = {
     -- Super
     { model = 'gb811s2',         brand = 'Pfister',              name = '811 S2',               category = 'Super' },

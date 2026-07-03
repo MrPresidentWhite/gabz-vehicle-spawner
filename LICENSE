@@ -34,8 +34,17 @@ and must be purchased independently:
 - GabZ: https://fivem.gabzv.com
 - GabZ Vehicle Pack (required): https://fivem.gabzv.com/package/6108207
 
-Vehicle spawn codes and metadata used in this project reference publicly
-available community data. They only work when the official GabZ vehicle pack
+Vehicle spawn codes and metadata used in this project are sourced from the
+GabZ Vehicle Data community repository:
+
+- https://github.com/JustBlueDolphin/Gabz-Vehicle-Data
+
+Thank you to JustBlueDolphin for providing and maintaining this data. That
+repository is a separate community project and is not affiliated with GabZ
+or this spawner resource.
+
+The spawn codes and metadata only work when the official GabZ vehicle pack
 is installed and properly licensed on your server.
 
-This project is not affiliated with, endorsed by, or sponsored by GabZ.
+This project is not affiliated with, endorsed by, or sponsored by GabZ or
+JustBlueDolphin.

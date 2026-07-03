@@ -2,7 +2,7 @@
 
 A FiveM vehicle spawner for the **GabZ vehicle pack**, featuring a modern NUI menu with categories, search, and multi-language support.
 
-Vehicle data is based on the [GabZ Vehicle Data Repository](https://github.com/JustBlueDolphin/Gabz-Vehicle-Data).
+The vehicle spawn codes and metadata in this resource are sourced from the community-maintained [GabZ Vehicle Data](https://github.com/JustBlueDolphin/Gabz-Vehicle-Data) repository. Thank you to [JustBlueDolphin](https://github.com/JustBlueDolphin) for providing and maintaining that data.
 
 > **Required:** This resource does not include vehicle models. You need a licensed [GabZ Vehicle Pack](https://fivem.gabzv.com/package/6108207) from [GabZ](https://fivem.gabzv.com).
 
@@ -205,6 +205,13 @@ The workflow will:
 4. Validate the draft and **publish** the release
 
 The release description is taken from `CHANGELOG.md`.
+
+## Acknowledgments
+
+- **[GabZ Vehicle Data](https://github.com/JustBlueDolphin/Gabz-Vehicle-Data)** by [JustBlueDolphin](https://github.com/JustBlueDolphin) - vehicle spawn codes, names, brands, and categories used in `config.lua`
+- **[GabZ](https://fivem.gabzv.com)** - official [GabZ Vehicle Pack](https://fivem.gabzv.com/package/6108207) required to spawn the vehicles in-game
+
+Thank you to JustBlueDolphin for making the vehicle metadata publicly available to the community.
 
 ## License
 
