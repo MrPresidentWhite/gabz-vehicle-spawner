@@ -1,0 +1,133 @@
+---
+description: Release commits, version bump, CHANGELOG.md, user-oriented commit messages (always English)
+alwaysApply: true
+---
+
+# Commits and Releases (gabz-vehicle-spawner)
+
+## When this rule applies
+
+Whenever a commit is **release-relevant** (new version in `fxmanifest.lua`, or you are asked to commit changes "for the next release").
+
+## CHANGELOG.md (repo)
+
+- **Required on release commit:** Update **`CHANGELOG.md`** in the same commit as the version bump and product changes (not "CHANGELOG later").
+- **Exactly one release version in the file:** The file must **not** list older versions. There is **only one** heading of the form **`## <version>`**, where **`<version>` exactly matches the `version` field in `fxmanifest.lua`**. Example: if `fxmanifest.lua` has `version '1.3.2'`, then `CHANGELOG.md` contains **only** a section `## 1.3.2` with that release's changes - no other `## ...` blocks for other versions.
+- **On the next release:** **Replace** the previous content - write a new section for the new version; do **not** keep older `## ...` blocks below. Under `# Changelog` keep a **short English intro** (1-2 sentences); no version history list in this file.
+- **Intro under `# Changelog` - tone for readers:** The first lines should read like **release notes for server owners and players**, welcoming and clear. **Avoid:** maintainer/repo speak ("user-visible changes only", "not listed here", focus on file structure or "historical notes"). **Instead:** e.g. briefly state that this file describes **this update**, optionally point to [GitHub Releases](https://github.com/MrPresidentWhite/gabz-vehicle-spawner/releases) for **older versions**. Same tone as the bullets below (plain English, no jargon about the document itself).
+- **Language:** **English only** - same language as Git commit messages for releases.
+- **Punctuation (required):** All text in **`CHANGELOG.md`** (heading **`## <version>`**, intro under `# Changelog`, all bullets) must follow **`.cursor/rules/human-punctuation-no-em-dash.mdc`**: especially **no Unicode em dash (U+2014)**; use normal ASCII hyphen (-) or rewrite the sentence (comma, period, parentheses).
+- **Style & detail:** **Bullet list** for server admins and players; **as detailed as useful** (concrete behavior, controls, visible fixes). No internal implementation or repo metadata.
+- **Strict reader gate (required before every release commit):** Read every bullet in **`CHANGELOG.md`** as text on a **GitHub Release page** or in-server update notes. If a maintainer, developer, or CI operator would be the target audience, **rewrite or remove** the bullet. See **"CHANGELOG reader gate"** below.
+- **Structure by category:** Under **`## <version>`** group entries under the English category headings below (`### Added`, `### Changed`, ...). Only **create sections that have at least one bullet** (no empty `###` blocks).
+- **Do not put in CHANGELOG:** purely internal or repo/tooling topics with no direct user impact - e.g. **GitHub Actions / workflows**, **Cursor rules / `.cursor/`**, CI/pipeline changes without behavior change in the shipped resource, refactors without UX/function change, maintainer-only docs.
+- **Distribution:** `.github/workflows/release.yml` reads **`CHANGELOG.md`** from the project root and sets the GitHub release description via `gh release create --notes-file CHANGELOG.md`. The published ZIP contains only the FiveM resource files, not `CHANGELOG.md`.
+
+### CHANGELOG categories (English headings in the document)
+
+All bullet text under `# Changelog` and **`## <version>`** stays **English**. Category headings use these names:
+
+| Meaning | English (`### ...`) | Content | Examples |
+|---------|---------------------|---------|----------|
+| New features | **Added** | New features or capabilities | - Added German language support<br>- New search filter by spawn code<br>- Emergency vehicle category |
+| Changes | **Changed** | Intentional behavior or UI adjustments | - Menu opens with F7 by default<br>- Previous vehicle is removed before spawning a new one |
+| Deprecated | **Deprecated** | Still works, will be removed later | - Legacy command alias is deprecated; use `/gabzvehicles` instead |
+| Removed | **Removed** | Deliberately removed features | - Removed unused config option |
+| Bug fixes | **Fixed** | Fixed issues (user-visible) | - Fixed vehicles stacking on spawn<br>- Fixed black background behind the menu |
+| Security | **Security** | Security-related fixes | - Restricted spawn to ace permission when enabled |
+| Performance | **Performance** | Noticeably faster or lighter | - Faster menu open on large vehicle lists |
+| Breaking changes | **Breaking** | Incompatible changes (rare; state clearly) | - Config key renamed: update your server config after upgrade |
+| Documentation | **Docs** | Only if **shipped** help or in-game/user-facing docs changed (not repo README alone) | - Clarified install steps in the resource README bundled with releases |
+
+**Notes for gabz-vehicle-spawner:** **Docs** and **Internal** rarely belong in CHANGELOG. Pure refactors, tooling, and maintainer docs do **not** belong in CHANGELOG.
+
+### Recommended order of `###` sections
+
+1. **Added**
+2. **Changed**
+3. **Deprecated**
+4. **Removed**
+5. **Fixed**
+6. **Security**
+7. **Performance**
+8. **Breaking** (only if there are entries)
+
+**Optional** after that, only if needed and reader-relevant: **Docs**. Do not use **Internal** routinely.
+
+### CHANGELOG reader gate (required before release commit)
+
+Before the commit, **check every bullet in `CHANGELOG.md` against this list**. One violation per bullet: **do not commit**; rewrite or remove the bullet.
+
+**Litmus test:** Would a **server owner or player** understand *what changes for them when using or running the resource*? If not, the text is too technical.
+
+**Forbidden in bullets and intro** (not exhaustive):
+
+- Repo/build/CI speak: GitHub Actions, workflow, runner, artifact, `.github/`, Cursor rules, `fxmanifest` internals as main topic
+- Implementation internals: NUI callback, `RegisterNetEvent`, locale.lua, joaat, networked entity, ace permission string names without user context
+- Developer jargon without benefit: refactored, shared script, manifest, bundling
+- Backticks, file paths, function/module names, ticket/PR numbers (unless essential for server admins, e.g. config key with clear explanation)
+
+**Instead:** What the **player or server admin sees or can do** - e.g. "press F7", "vehicle menu", "spawn code search", "German and English", "delete previous vehicle on spawn", "install from GitHub Releases ZIP".
+
+**Examples (do not write like this):**
+
+- Bad: `Fixed deletePreviousVehicle by requesting network control before DeleteEntity.`
+- Good: `Fixed previous spawned vehicles not being removed when spawning a new one.`
+
+- Bad: `Added locales/de.json and shared/locale.lua for i18n.`
+- Good: `Added German language support for the vehicle menu and notifications.`
+
+- Bad: `Release workflow uploads gabz-vehicle-spawner-vX.X.X.zip to GitHub.`
+- Good: *(omit - maintainer-only, not for CHANGELOG)*
+
+**Required agent flow:** After writing **`CHANGELOG.md`**, check each bullet against **Forbidden** and **Litmus test**; search the file for forbidden terms before creating the release commit.
+
+## Version number (`fxmanifest.lua`)
+
+- **Patch** (x.y.**Z**): small fixes, no visible product changes.
+- **Minor** (x.**Y**.0): new or changed **user-facing features**, UI, behavior players or admins notice.
+- **Major** (**X**.0.0): breaking changes, large shifts requiring upgrade notes or manual steps.
+
+Before the commit, bump the version **to match the overall change size** (do not default to patch out of habit).
+
+```lua
+version '1.0.0'  -- in fxmanifest.lua
+```
+
+## Commit messages: reader-oriented, **always English**
+
+- **Language:** Title and body **English only** (no German or other languages in commit text).
+- **Audience:** Server owners and players - not only repo maintainers. Write like a short, clear release note.
+- **Tone:** clear and short, **without** tech jargon as the main content (no file names, event names, or internal module names as the headline).
+- **Content:** *What improves from the user's perspective?* Optional second line with more benefit - no technical detail dump. **Detailed reader-focused bullets** belong in **`CHANGELOG.md`** (English, **one** heading **`## ...`** = exact `version` from `fxmanifest.lua`); the Git commit message stays **short**.
+
+Examples:
+
+- Bad: `feat(client): add ensureEntityControl before DeleteEntity`
+- Good: `Fix previous vehicle deletion when spawning a new GabZ vehicle`
+
+- Bad (wrong language): `Deutsche Sprache hinzugefuegt`
+- Good: `Add German language support for menu and notifications`
+
+- Bad: `chore: add release.yml and build-release.sh`
+- Good: *(not a release commit - tooling only; no version bump)*
+
+## One commit = everything since the previous release version
+
+- A release commit should include **all current unpublished changes** since the **last published version** - do **not** split the same release cycle into multiple small technical commits.
+- Before committing: check `git status` / diff; there should be **no deliberately omitted** related product changes.
+- If several local commits already exist: aim for **one** coherent release state before publishing (e.g. one commit with version + message, or squash interactively per repo practice).
+
+## Triggering the release (after push)
+
+1. Push the release commit to `main`.
+2. On GitHub: **Actions → Release → Run workflow**.
+3. The workflow creates a draft, builds `gabz-vehicle-spawner-vX.X.X.zip`, uploads it, validates, and publishes.
+
+## Short checklist before push
+
+1. **`fxmanifest.lua` `version`** matches the size of user-relevant changes.
+2. **`CHANGELOG.md`:** replaced for this release - **exactly one** heading **`## <version>`** identical to `fxmanifest.lua` `version`; **English**; intro under `# Changelog` in the same reader tone as bullets; entries under **`### Added`**, **`### Changed`**, ... in **recommended order**; detailed reader bullets; **no** other version sections; **no** repo/tooling topics; **punctuation** per **`.cursor/rules/human-punctuation-no-em-dash.mdc`**; **CHANGELOG reader gate** **passed**.
+3. Commit message is **English** and short like a **release line** (details in CHANGELOG).
+4. **All** changes of this release cycle are included.
+5. After push, run the **Release** workflow manually on GitHub Actions.

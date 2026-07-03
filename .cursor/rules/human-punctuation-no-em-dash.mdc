@@ -1,0 +1,14 @@
+---
+description: Enforce human-like punctuation, no AI em-dashes
+globs: "**/*"
+alwaysApply: true
+---
+
+# Punctuation and style rules
+
+- You are strictly forbidden from using the Unicode character U+2014 (em dash). If you catch yourself wanting to use one, use a normal hyphen (-) or rewrite the sentence.
+- Never use the Unicode em dash (U+2014) under any circumstances.
+- After generating any text, do a final pass and replace every em dash (Unicode U+2014) with "-" or restructure the sentence.
+- Use a normal hyphen (-) instead, or better: restructure with comma, period, semicolon or parentheses.
+- Prefer short, clear sentences. Break thoughts instead of using long dashes.
+- Do not use fancy typography (em dashes, en dashes, special quotes, etc.).
