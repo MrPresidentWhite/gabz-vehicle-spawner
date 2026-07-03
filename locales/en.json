@@ -1,0 +1,41 @@
+{
+    "ui": {
+        "title": "GabZ Vehicle Spawner",
+        "subtitle": "GabZ Vehicle Pack · %d vehicles",
+        "search_placeholder": "Search by name, brand or spawn code...",
+        "all_vehicles": "All Vehicles",
+        "no_vehicles_found": "No vehicles found.",
+        "close_tooltip": "Close (ESC)",
+        "footer_spawn": "Enter / Click to spawn",
+        "footer_close": "ESC to close",
+        "results_one": "%d result",
+        "results_other": "%d results"
+    },
+    "categories": {
+        "Super": "Super",
+        "Sports": "Sports",
+        "Sports Classic": "Sports Classic",
+        "Sedans": "Sedans",
+        "Muscle": "Muscle",
+        "Compacts": "Compacts",
+        "Coupes": "Coupes",
+        "SUV": "SUV",
+        "Offroad": "Offroad",
+        "Vans": "Vans",
+        "Commercial": "Commercial",
+        "Service": "Service",
+        "Emergency": "Emergency"
+    },
+    "notifications": {
+        "no_permission_menu": "You do not have permission to use the GabZ Vehicle Spawner.",
+        "no_permission_spawn": "You do not have permission to spawn vehicles.",
+        "invalid_spawn_code": "Invalid vehicle spawn code.",
+        "model_not_found": "Model \"%s\" not found. Is the GabZ vehicle pack installed?",
+        "model_load_failed": "Model \"%s\" could not be loaded.",
+        "spawn_failed": "Vehicle could not be created.",
+        "vehicle_spawned": "Vehicle spawned: %s"
+    },
+    "keymapping": {
+        "open_menu": "Open GabZ vehicle menu"
+    }
+}

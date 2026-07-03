@@ -1,0 +1,15 @@
+# IDE / editor
+.cursor/
+.vscode/
+.idea/
+
+# MCP tooling (local only)
+mcps/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log

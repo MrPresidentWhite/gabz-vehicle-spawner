@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GabZ Vehicle Spawner</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app" class="hidden">
+        <div class="panel">
+            <header class="header">
+                <div class="header-left">
+                    <div class="logo">GZ</div>
+                    <div>
+                        <h1 id="ui-title">GabZ Vehicle Spawner</h1>
+                        <p class="subtitle" id="ui-subtitle">GabZ Vehicle Pack · 0 vehicles</p>
+                    </div>
+                </div>
+                <button class="btn-close" id="btn-close" title="Close">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </header>
+
+            <div class="toolbar">
+                <div class="search-box">
+                    <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="search" placeholder="Search..." autocomplete="off">
+                </div>
+            </div>
+
+            <div class="content">
+                <aside class="sidebar">
+                    <button class="category-btn active" data-category="all" id="btn-all-vehicles">
+                        <span id="label-all-vehicles">All Vehicles</span>
+                        <span class="badge" id="badge-all">0</span>
+                    </button>
+                    <div id="category-list"></div>
+                </aside>
+
+                <main class="vehicle-area">
+                    <div class="vehicle-header">
+                        <h2 id="current-category">All Vehicles</h2>
+                        <span id="result-count"></span>
+                    </div>
+                    <div class="vehicle-grid" id="vehicle-grid"></div>
+                    <div class="empty-state hidden" id="empty-state">
+                        <p id="empty-state-text">No vehicles found.</p>
+                    </div>
+                </main>
+            </div>
+
+            <footer class="footer">
+                <span id="footer-spawn">Enter / Click to spawn</span>
+                <span id="footer-close">ESC to close</span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
